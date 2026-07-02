@@ -9,6 +9,4 @@ An AI-powered e-commerce marketplace
 - Cart
 - Buy Now
 - Order History
-- Firebase Authentication
-- Firestore Database
 - Voice Search
