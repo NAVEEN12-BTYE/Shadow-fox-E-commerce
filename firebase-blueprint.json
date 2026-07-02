@@ -1,0 +1,162 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information containing role, name, email, addresses, and registration date.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The secure unique user identifier from Firebase Auth."
+        },
+        "email": {
+          "type": "string",
+          "description": "The verified email address of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The user's customizable display name."
+        },
+        "fullName": {
+          "type": "string",
+          "description": "The user's official full name."
+        },
+        "phone": {
+          "type": "string",
+          "description": "The user's contact phone number."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["customer", "seller", "admin"],
+          "description": "The system role assigned to the user."
+        },
+        "addresses": {
+          "type": "array",
+          "description": "Custom registered shipping destinations."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp representing the user account registration time."
+        }
+      },
+      "required": ["uid", "email", "displayName", "role", "addresses", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A luxury item available on the Aura platform.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "discount": { "type": "number" },
+        "brand": { "type": "string" },
+        "category": { "type": "string" },
+        "rating": { "type": "number" },
+        "reviewsCount": { "type": "number" },
+        "image": { "type": "string" },
+        "images": { "type": "array" },
+        "specifications": { "type": "object" },
+        "stock": { "type": "number" },
+        "sellerId": { "type": "string" },
+        "isFeatured": { "type": "boolean" },
+        "isTrending": { "type": "boolean" },
+        "isFlashSale": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "image", "category", "stock"]
+    },
+    "CartItem": {
+      "title": "CartItem",
+      "description": "An entry in the user's active shopping cart.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "product": { "$ref": "Product" },
+        "quantity": { "type": "number" },
+        "selectedColor": { "type": "string" },
+        "selectedSize": { "type": "string" }
+      },
+      "required": ["id", "product", "quantity"]
+    },
+    "WishlistItem": {
+      "title": "WishlistItem",
+      "description": "A flagged product saved in the user's wishlist.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Matches the productId" },
+        "productId": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "productId", "createdAt"]
+    },
+    "Address": {
+      "title": "Address",
+      "description": "A shipping destination coordinate for order delivery.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "zipCode": { "type": "string" },
+        "country": { "type": "string" },
+        "phone": { "type": "string" },
+        "isDefault": { "type": "boolean" }
+      },
+      "required": ["id", "name", "street", "city", "state", "zipCode", "country", "phone"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "An invoice purchase record representing procured items.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "discountApplied": { "type": "number" },
+        "status": { "type": "string" },
+        "address": { "$ref": "Address" },
+        "paymentMethod": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "customerId", "items", "total", "status", "address", "paymentMethod", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Premium luxury products catalog loaded dynamically."
+    },
+    "/users/{uid}": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles containing role credentials and contact info."
+    },
+    "/users/{uid}/cart/{cartItemId}": {
+      "schema": "CartItem",
+      "description": "Active shopping items saved for a logged-in user."
+    },
+    "/users/{uid}/wishlist/{productId}": {
+      "schema": "WishlistItem",
+      "description": "Items flagged for purchase by the user."
+    },
+    "/users/{uid}/addresses/{addressId}": {
+      "schema": "Address",
+      "description": "Multiple delivery coordinates configured by the user."
+    },
+    "/users/{uid}/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer personal procurement log."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Global administration order tracker."
+    }
+  }
+}

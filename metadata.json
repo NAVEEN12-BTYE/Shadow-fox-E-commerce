@@ -1,0 +1,10 @@
+{
+  "name": "Remix: AI Commerce",
+  "description": "Future of Intelligent Shopping - A complete, production-ready AI Powered E-Commerce Marketplace with advanced AI Shopping Assistant, smart recommendations, seller and admin dashboards, and robust Firebase authentication.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
